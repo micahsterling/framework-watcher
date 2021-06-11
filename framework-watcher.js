@@ -1,59 +1,83 @@
 /* global Chart, axios */
-// function performGetRequest() {
-var resultElement = document.getElementById('frameworkWatcher');
-resultElement.innerHTML = '';
-// Make a request for a user with a given ID
-let frameworks = ["https://api.github.com/repos/facebook/react", "https://api.github.com/repos/vuejs/vue", "https://api.github.com/repos/angular/angular.js", "https://api.github.com/repos/emberjs/ember.js", "https://api.github.com/repos/sveltejs/svelte"];
-let url = [];
-for (let url of frameworks) {
-  // console.log(url);
-  // axios.all([
-  //   axios.get("https://api.github.com/repos/facebook/react"),
-  //   axios.get("https://api.github.com/repos/vuejs/vue"),
-  //   axios.get("https://api.github.com/repos/angular/angular.js"),
-  //   axios.get("https://api.github.com/repos/emberjs/ember.js"),
-  //   axios.get("https://api.github.com/repos/sveltejs/svelte"),
-  // ])
-  axios.get(url)
-    .then(function (response) {
-      resultElement.innerHTML = frameworkWatcher(response);
-      console.log("framework");
-      // handle success
-      // console.log(response.data);
-      console.log(response.data.name);
-      console.log(response.data.subscribers_count);
-      console.log(response.data.stargazers_count);
-      console.log(response.data.forks);
-      // let frameworkData = {};
-      // for (let frameworkData of response) {
-      //   response.data.name, response.data.subscribers_count, response.data.stargazers_count, response.data.forks;
-      // }
-      // }
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .then(function () {
-      // always executed
-    });
-  // }
+let allData = {};
+function getReact() {
+  return axios.get("https://api.github.com/repos/facebook/react");
 }
-function frameworkWatcher(response) {
-  let frameworks = ["https://api.github.com/repos/facebook/react", "https://api.github.com/repos/vuejs/vue", "https://api.github.com/repos/angular/angular.js", "https://api.github.com/repos/emberjs/ember.js", "https://api.github.com/repos/sveltejs/svelte"];
-  let allData = [];
-  for (let url of frameworks) {
-    let count = [response.data.name, response.data.subscribers_count, response.data.stargazers_count, response.data.forks];
-    var frameworkData = {};
-    frameworkData = frameworks;
-    frameworkData = count;
-    allData.push(frameworkData);
-    console.log("frameworkData");
-    console.log(allData);
-    return allData;
 
-  }
+function getVue() {
+  return axios.get("https://api.github.com/repos/vuejs/vue");
 }
+function getAngular() {
+  return axios.get("https://api.github.com/repos/angular/angular.js");
+}
+function getEmber() {
+  return axios.get("https://api.github.com/repos/emberjs/ember.js");
+}
+function getSvelte() {
+  return axios.get("https://api.github.com/repos/sveltejs/svelte");
+}
+
+Promise.all([getReact(), getVue(), getAngular(), getEmber(), getSvelte()])
+  .then(function (response) {
+    // const acct = results[0];
+    // const perm = results[1];
+    console.log(response);
+    var i;
+    for (i = 0; i < response.length; i++) {
+      console.log(response[i].data.name);
+      console.log(response[i].data.subscribers_count);
+      console.log(response[i].data.stargazers_count);
+      console.log(response[i].data.forks);
+      // response.push(allData);
+      // console.log(allData);
+      // return allData;
+    }
+  },
+    // console.log(getSvelte()),
+    function frameworkWatcher(response) {
+      console.log(response);
+      // let frameworks = ["https://api.github.com/repos/facebook/react", "https://api.github.com/repos/vuejs/vue", "https://api.github.com/repos/angular/angular.js", "https://api.github.com/repos/emberjs/ember.js", "https://api.github.com/repos/sveltejs/svelte"];
+      let allData = [];
+      // for (let url of frameworks) {
+      // let count = [response.data.name, response.data.subscribers_count, response.data.stargazers_count, response.data.forks];
+      var frameworkData = {};
+      // frameworkData = frameworks;
+      // frameworkData = ;
+      allData.push(frameworkData);
+      console.log("frameworkData");
+      return allData;
+
+      // }
+    });
+// function performGetRequest() {
+// var resultElement = document.getElementById('frameworkWatcher');
+// resultElement.innerHTML = '';
+// Make a request for a user with a given ID
+// let frameworks = ["https://api.github.com/repos/facebook/react", "https://api.github.com/repos/vuejs/vue", "https://api.github.com/repos/angular/angular.js", "https://api.github.com/repos/emberjs/ember.js", "https://api.github.com/repos/sveltejs/svelte"];
+// let url = [];
+// for (let url of frameworks) {
+
+//   axios.get(url)
+//     .then(function (response) {
+//       resultElement.innerHTML = frameworkWatcher(response);
+//       console.log("framework");
+//       // handle success
+// console.log(response.data);
+// let frameworkData = {};
+// for (let frameworkData of response) {
+//   response.data.name, response.data.subscribers_count, response.data.stargazers_count, response.data.forks;
+// }
+// }
+//     })
+//     .catch (function (error) {
+//   // handle error
+//   console.log(error);
+// })
+//     .then(function () {
+//   // always executed
+// });
+//   // }
+// }
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'bar',
