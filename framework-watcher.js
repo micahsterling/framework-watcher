@@ -1,14 +1,22 @@
 /* global Chart, axios */
-
+// function performGetRequest() {
+var resultElement = document.getElementById('frameworkWatcher');
+resultElement.innerHTML = '';
 // Make a request for a user with a given ID
 let frameworks = ["https://api.github.com/repos/facebook/react", "https://api.github.com/repos/vuejs/vue", "https://api.github.com/repos/angular/angular.js", "https://api.github.com/repos/emberjs/ember.js", "https://api.github.com/repos/sveltejs/svelte"];
-
-let url = "";
+let url = [];
 for (let url of frameworks) {
   // console.log(url);
-
+  // axios.all([
+  //   axios.get("https://api.github.com/repos/facebook/react"),
+  //   axios.get("https://api.github.com/repos/vuejs/vue"),
+  //   axios.get("https://api.github.com/repos/angular/angular.js"),
+  //   axios.get("https://api.github.com/repos/emberjs/ember.js"),
+  //   axios.get("https://api.github.com/repos/sveltejs/svelte"),
+  // ])
   axios.get(url)
     .then(function (response) {
+      resultElement.innerHTML = frameworkWatcher(response);
       console.log("framework");
       // handle success
       // console.log(response.data);
@@ -16,6 +24,11 @@ for (let url of frameworks) {
       console.log(response.data.subscribers_count);
       console.log(response.data.stargazers_count);
       console.log(response.data.forks);
+      // let frameworkData = {};
+      // for (let frameworkData of response) {
+      //   response.data.name, response.data.subscribers_count, response.data.stargazers_count, response.data.forks;
+      // }
+      // }
     })
     .catch(function (error) {
       // handle error
@@ -24,17 +37,31 @@ for (let url of frameworks) {
     .then(function () {
       // always executed
     });
-};
+  // }
+}
+function frameworkWatcher(response) {
+  let frameworks = ["https://api.github.com/repos/facebook/react", "https://api.github.com/repos/vuejs/vue", "https://api.github.com/repos/angular/angular.js", "https://api.github.com/repos/emberjs/ember.js", "https://api.github.com/repos/sveltejs/svelte"];
+  let allData = [];
+  for (let url of frameworks) {
+    let count = [response.data.name, response.data.subscribers_count, response.data.stargazers_count, response.data.forks];
+    var frameworkData = {};
+    frameworkData = frameworks;
+    frameworkData = count;
+    allData.push(frameworkData);
+    console.log("frameworkData");
+    console.log(allData);
+    return allData;
 
-
+  }
+}
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: "none",
     datasets: [{
       label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
+      data: [2, 6, 22, 5, 13, 6],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
