@@ -3,7 +3,6 @@
 function getReact() {
   return axios.get("https://api.github.com/repos/facebook/react");
 }
-
 function getVue() {
   return axios.get("https://api.github.com/repos/vuejs/vue");
 }
@@ -16,28 +15,27 @@ function getEmber() {
 function getSvelte() {
   return axios.get("https://api.github.com/repos/sveltejs/svelte");
 }
-// function performGetRequest() {
 var resultElement = document.getElementById('frameworkWatcher');
-resultElement.innerHTML = '';
+resultElement.innerHTML = 'hi hi';
 
 Promise.all([getReact(), getVue(), getAngular(), getEmber(), getSvelte()])
   .then(function (response) {
     resultElement.innerHTML = frameworkWatcher(response);
-    // const acct = results[0];
-    // const perm = results[1];
-    // console.log(response);
+
+    let frameworkData = {};
     var i;
     for (i = 0; i < response.length; i++) {
       console.log(response[i].data.name);
-      console.log(response[i].data.subscribers_count);
-      console.log(response[i].data.stargazers_count);
-      console.log(response[i].data.forks);
+      frameworkData[response[i].data.name] = { subscribers: response[i].data.subscribers_count, stargazers: response[i].data.stargazers_count, forks: response[i].data.forks };
+      // console.log(response[i].data.subscribers_count);
+      // console.log(response[i].data.stargazers_count);
+      // console.log(response[i].data.forks);
       // response.push(allData);
       // console.log(allData);
-      // return allData;
     }
+    console.log(frameworkData);
+    // return frameworkData.subscribers;
   });
-// }
 
 let allData = [];
 let frameworkName = [];
@@ -46,24 +44,21 @@ function frameworkWatcher(response) {
   let frameworkData = {};
   var i;
   for (i = 0; i < response.length; i++) {
-    // allData.push(frameworkData);
-    // allData.push({
-    //   name: response[i].data.name,
-    //   subscribers: response[i].data.subscribers_count,
-    //   stargazers: response[i].data.stargazers_count,
-    //   forks: response[i].data.forks,
-    // });
-    frameworkName.push(response[i].data.name);
+    allData.push({
+      name: response[i].data.name,
+      subscribers: response[i].data.subscribers_count,
+      stargazers: response[i].data.stargazers_count,
+      forks: response[i].data.forks,
+    });
+
     allData.push(response[i].data.subscribers_count);
     allData.push(response[i].data.stargazers_count);
     allData.push(response[i].data.forks);
   }
-  // let count = [response.data.name, response.data.subscribers_count, response.data.stargazers_count, response.data.forks];
   // frameworkData = frameworks;
   // allData.push(frameworkData);
   console.log("frameworkData");
-  console.log(allData);
-  return allData;
+  console.log(frameworkData);
 
 
   // function performGetRequest() {
@@ -95,15 +90,17 @@ function frameworkWatcher(response) {
   // });
   //   // }
 }
+console.log(allData);
+console.log(frameworkName);
 
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: frameworkName,
+    labels: ["hi", "hey", "dog", "frog"],
     datasets: [{
       label: '# of Votes',
-      data: allData,
+      data: [0, 1, 2, 3, 4, 5],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -130,4 +127,46 @@ var myChart = new Chart(ctx, {
       }
     }
   }
+});
+
+// const labels = ['hot', 'pot', 'top', 'hop']
+// const DATA_COUNT = 2,
+
+const ctx2 = document.getElementById('myChart2').getContext('2d');
+var myChart2 = new Chart(ctx2, {
+  type: 'bar',
+
+
+  // NUMBER_CFG: { count: 3, min: -100, max: 100 },
+
+  labels: ['hot', 'pot', 'top', 'hop'],
+  data: {
+    labels: ['hot', 'pot', 'top', 'hop'],
+    datasets: [
+      {
+        label: 'React',
+        data: [5, 3, 5, 7],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 1)'
+      },
+      {
+        label: 'View.js',
+        data: [9, 8, 7, 6, 5, 4, 3],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'red',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Bar Chart'
+      }
+    }
+  },
 });
