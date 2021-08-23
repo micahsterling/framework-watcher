@@ -41,24 +41,21 @@ let allData = [];
 let frameworkName = [];
 function frameworkWatcher(response) {
   console.log(response);
-  let frameworkData = {};
   var i;
   for (i = 0; i < response.length; i++) {
     allData.push({
       name: response[i].data.name,
-      subscribers: response[i].data.subscribers_count,
-      stargazers: response[i].data.stargazers_count,
       forks: response[i].data.forks,
+      stargazers: response[i].data.stargazers_count,
+      subscribers: response[i].data.subscribers_count,
     });
 
-    allData.push(response[i].data.subscribers_count);
-    allData.push(response[i].data.stargazers_count);
     allData.push(response[i].data.forks);
+    allData.push(response[i].data.stargazers_count);
+    allData.push(response[i].data.subscribers_count);
   }
   // frameworkData = frameworks;
   // allData.push(frameworkData);
-  console.log("frameworkData");
-  console.log(frameworkData);
 
 
   // function performGetRequest() {
@@ -93,45 +90,6 @@ function frameworkWatcher(response) {
 console.log(allData);
 console.log(frameworkName);
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ["hi", "hey", "dog", "frog"],
-    datasets: [{
-      label: '# of Votes',
-      data: [0, 1, 2, 3, 4, 5],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
-
-// const labels = ['hot', 'pot', 'top', 'hop']
-// const DATA_COUNT = 2,
-
 const ctx2 = document.getElementById('myChart2').getContext('2d');
 var myChart2 = new Chart(ctx2, {
   type: 'bar',
@@ -139,22 +97,39 @@ var myChart2 = new Chart(ctx2, {
 
   // NUMBER_CFG: { count: 3, min: -100, max: 100 },
 
-  labels: ['hot', 'pot', 'top', 'hop'],
   data: {
-    labels: ['hot', 'pot', 'top', 'hop'],
+    labels: ['Forks', 'Stargazers', 'Subscribers'],
     datasets: [
+      {
+        label: 'Angular.js',
+        data: [9, 8, 7,],
+        borderColor: 'black',
+        backgroundColor: 'red',
+      },
+      {
+        label: 'Ember.js',
+        data: [6, 5, 4],
+        borderColor: 'black',
+        backgroundColor: 'yellow',
+      },
       {
         label: 'React',
         data: [5, 3, 5, 7],
-        borderColor: 'rgba(255, 99, 132, 1)',
+        borderColor: 'black',
         backgroundColor: 'rgba(54, 162, 235, 1)'
       },
       {
+        label: 'Svelte',
+        data: [8, 7, 3],
+        borderColor: 'black',
+        backgroundColor: 'orange',
+      },
+      {
         label: 'View.js',
-        data: [9, 8, 7, 6, 5, 4, 3],
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'red',
-      }
+        data: [12, 5, 15,],
+        borderColor: 'black',
+        backgroundColor: 'purple',
+      },
     ]
   },
   options: {
@@ -170,3 +145,43 @@ var myChart2 = new Chart(ctx2, {
     }
   },
 });
+
+// var ctx = document.getElementById('myChart').getContext('2d');
+// var myChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ["hi", "hey", "dog", "frog"],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [0, 1, 2, 3, 4, 5],
+//       backgroundColor: [
+//         'rgba(255, 99, 132, 0.2)',
+//         'rgba(54, 162, 235, 0.2)',
+//         'rgba(255, 206, 86, 0.2)',
+//         'rgba(75, 192, 192, 0.2)',
+//         'rgba(153, 102, 255, 0.2)',
+//         'rgba(255, 159, 64, 0.2)'
+//       ],
+//       borderColor: [
+//         'rgba(255, 99, 132, 1)',
+//         'rgba(54, 162, 235, 1)',
+//         'rgba(255, 206, 86, 1)',
+//         'rgba(75, 192, 192, 1)',
+//         'rgba(153, 102, 255, 1)',
+//         'rgba(255, 159, 64, 1)'
+//       ],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     scales: {
+//       y: {
+//         beginAtZero: true
+//       }
+//     }
+//   }
+// });
+
+// const labels = ['hot', 'pot', 'top', 'hop']
+// const DATA_COUNT = 2,
+
